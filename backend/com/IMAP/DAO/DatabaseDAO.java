@@ -21,12 +21,13 @@ public class DatabaseDAO {
 	
 	public void registration(User u) throws SQLException
 	{
-		String sql= "INSERT INTO users (name,email,username,password) VALUES (?,?,?,md5(?))";
+		String sql= "INSERT INTO users (role,name,email,username,password) VALUES (?,?,?,?,md5(?))";
 		PreparedStatement st= con.prepareStatement(sql);
-		st.setString(1, u.getName());
+		st.setString(1, u.getRole());
+		st.setString(2, u.getName());
 		st.setString(2, u.getEmail());
-		st.setString(3, u.getUsername());
-		st.setString(4, u.getPassword());
+		st.setString(4, u.getUsername());
+		st.setString(5, u.getPassword());
 		int i= st.executeUpdate();
 		System.out.println(i+" row inserted succesfully.");
 		
@@ -78,12 +79,30 @@ public class DatabaseDAO {
 			return false;
 	}
 
-	public boolean deleteUser(int id) throws SQLException
+	public int deleteUser(int id) throws SQLException
 	{
 		String sql= "DELETE from users where id=?";
 		PreparedStatement st= con.prepareStatement(sql);
 		st.setInt(1, id);
-		boolean s= st.execute();
+		int s= st.executeUpdate();
+		System.out.println(s);
+        try {   
+            st.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return s;
+	}
+	
+	public int editUser(User u) throws SQLException
+	{
+		String sql= "UPDATE users set name = ?, email = ? where id=?";
+		PreparedStatement st= con.prepareStatement(sql);
+		st.setString(1, u.getName());
+		st.setString(2, u.getEmail());
+		st.setInt(3, u.getId());
+		int s= st.executeUpdate();
 		System.out.println(s);
         try {   
             st.close();

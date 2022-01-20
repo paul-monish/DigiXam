@@ -395,6 +395,7 @@ form.sign-in-form {
             <input type="submit" value="Sign in" class="btn solid" />
           </form>
           <form action="RegistrationController" method="post" class="sign-up-form">
+          	<input type="hidden" name = "role" value="admin">
             <h2 class="title">Sign up</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>

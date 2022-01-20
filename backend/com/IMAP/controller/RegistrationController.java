@@ -27,12 +27,13 @@ public class RegistrationController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
+		String role =request.getParameter("role");
 		String name =request.getParameter("name");
 		String email =request.getParameter("email");
 		String password =request.getParameter("password");
 		String username = name.split(" ", 2)[0].toLowerCase()+new RandomUsername().generateUsername(3);
 		User u= new User();
+		u.setRole(role);
 		u.setName(name);
 		u.setUsername(username);
 		u.setEmail(email);

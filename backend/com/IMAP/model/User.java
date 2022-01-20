@@ -1,6 +1,14 @@
 package com.IMAP.model;
 
 public class User {
+	private int id;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	private String role;
 	private String name;
 	private String username;
 	private String email;
@@ -10,6 +18,12 @@ public class User {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	public String getUsername() {
 		return username;

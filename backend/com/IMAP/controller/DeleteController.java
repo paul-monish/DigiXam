@@ -24,7 +24,7 @@ public class DeleteController extends HttpServlet {
 		DatabaseDAO dao;
 		try {
 			dao = new DatabaseDAO();
-			if(dao.deleteUser(Integer.parseInt(id)))
+			if(dao.deleteUser(Integer.parseInt(id))>=1)
 			{
 				response.sendRedirect("home");
 			}	
