@@ -77,5 +77,20 @@ public class DatabaseDAO {
 		else 
 			return false;
 	}
-	
+
+	public boolean deleteUser(int id) throws SQLException
+	{
+		String sql= "DELETE from users where id=?";
+		PreparedStatement st= con.prepareStatement(sql);
+		st.setInt(1, id);
+		boolean s= st.execute();
+		System.out.println(s);
+        try {   
+            st.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return s;
+	}
 }
