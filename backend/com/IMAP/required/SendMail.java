@@ -15,6 +15,7 @@ import javax.mail.internet.MimeMessage;
 
 import com.IMAP.model.ForgotPasswordModel;
 import com.IMAP.model.NewPasswordModel;
+import com.IMAP.model.User;
 
 public class SendMail {
 	Session session;
@@ -66,4 +67,25 @@ public class SendMail {
 		test= true;
 		return test;
 	}
+	
+	public boolean registrationMail(User u) throws AddressException, MessagingException, UnsupportedEncodingException
+	{
+		boolean test = false;
+		String toMail = u.getEmail();
+		Message message = new MimeMessage(session);
+		message.setFrom(new InternetAddress(fromEmail, "DigiXam"));
+		message.addRecipient(Message.RecipientType.TO, new InternetAddress(toMail));
+		String n=u.getName(); 
+		String un=u.getUsername(); 
+		String e=u.getEmail(); 
+		String p=u.getPassword(); 
+		message.setSubject("Login Credential!");
+		message.setText("Hello, "+n+"\nYour DigiXam's login credentials are:\r\n"
+				+ "Your User Name is: " + un 
+				+"\nYour Password is: " + p);
+		Transport.send(message);
+		test= true;
+		return test;
+	}
+
 }

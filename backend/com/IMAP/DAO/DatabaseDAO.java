@@ -25,7 +25,7 @@ public class DatabaseDAO {
 		PreparedStatement st= con.prepareStatement(sql);
 		st.setString(1, u.getRole());
 		st.setString(2, u.getName());
-		st.setString(2, u.getEmail());
+		st.setString(3, u.getEmail());
 		st.setString(4, u.getUsername());
 		st.setString(5, u.getPassword());
 		int i= st.executeUpdate();

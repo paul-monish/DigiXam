@@ -18,7 +18,7 @@ public class DeleteController extends HttpServlet {
        
     }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id= request.getParameter("id");
 		//response.getWriter().println(id);
 		DatabaseDAO dao;
@@ -26,7 +26,7 @@ public class DeleteController extends HttpServlet {
 			dao = new DatabaseDAO();
 			if(dao.deleteUser(Integer.parseInt(id))>=1)
 			{
-				response.sendRedirect("home");
+				response.sendRedirect("user");
 			}	
 			else
 			{
