@@ -46,7 +46,7 @@
       <img src="Assets/img/dashboard/face-1.jpg" alt="">
       <span class="admin_name"><%=user%></span>
       <i class='bx bx-chevron-down'></i>
-      <div class="dropdown-menu" style= "margin-left: 6.5rem;" aria-labelledby="dropdownMenuButton">
+      <div class="dropdown-menu" style= "margin-left: 1.95rem;" aria-labelledby="dropdownMenuButton">
 		   <a class="dropdown-item" href="#">Profile</a>
 		   <form action="LogoutController" method="post">
        			<button class="btn btn-danger dropdown-item">Logout</button>

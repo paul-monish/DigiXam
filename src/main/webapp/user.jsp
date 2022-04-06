@@ -749,9 +749,9 @@ body{
 					<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle1" aria-hidden="true">
 					  <div class="modal-dialog modal-dialog-centered" role="document">
 					    <div class="modal-content">
-					    <form action="RegistrationController" method="post">
+					    <form action="AddUserController" method="post">
 					      <div class="modal-header">
-					        <h5 class="modal-title" id="exampleModalCenterTitle1">Users</h5>
+					        <h5 class="modal-title" id="exampleModalCenterTitle1">Users <%out.println(role);%></h5>
 					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					          <span aria-hidden="true">&times;</span>
 					        </button>
@@ -823,6 +823,7 @@ body{
 	PreparedStatement st= con.prepareStatement(sql);
 	ResultSet rs= st.executeQuery();
 	%>
+
 
  <table style="width:100%;" id="filtertable" class="table cust-datatable dataTable no-footer">
   <thead>
