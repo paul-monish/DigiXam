@@ -1,24 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-</body>
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.GregorianCalendar"%>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-
-<script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
-
-<script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.flash.min.js"></script>
-
-<script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
-<script src="Assets/js/script.js"></script>
-</html>
+ <!-- jQuery -->
+<script src="Assets/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="Assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="Assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="Assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="Assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="Assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="Assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="Assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="Assets/plugins/jszip/jszip.min.js"></script>
+<script src="Assets/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="Assets/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="Assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="Assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="Assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="Assets/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="Assets/dist/js/demo.js"></script>
+<!-- Page specific script -->
+<script src="https://use.fontawesome.com/8587060daf.js"></script>

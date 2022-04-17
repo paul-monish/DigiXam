@@ -5,20 +5,18 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbConnection {
-	private String url= "jdbc:mysql://localhost:3306/digixam";
-	private String user= "root";
-	private String password= "SQLPassword";
-	
-	public Connection getConnection() throws SQLException
-	{
+	private String url = "jdbc:mysql://localhost:3306/digixam";
+	private String user = "root";
+	private String password = "10339";
+
+	public Connection getConnection() throws SQLException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection mycon= DriverManager.getConnection(url, user, password);
-			if(mycon==null) {
+			Connection mycon = DriverManager.getConnection(url, user, password);
+			if (mycon == null) {
 				System.out.println("Not Connected!!!");
 				return null;
-			}
-			else {
+			} else {
 				System.out.println("Connected...");
 				return mycon;
 			}

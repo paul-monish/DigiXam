@@ -1,80 +1,118 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<div class="sidebar">
-    <div class="logo-details">
-      <!-- <i class='bx bxl-c-plus-plus'></i> -->
-      <img src="Assets/img/dashboard/logo.png" alt="logo" id="logo" style="width:41px; height:41px; margin-left: .8rem; margin-top: .60rem;"> 
-      <span class="logo_name" style="margin-left: .65rem; margin-top: .15rem;">DigiXam</span>
-    </div>
-      <ul class="nav-links">
-        <li>
-          <a href="home" class="active">
-            <i class='bx bx-grid-alt' ></i>
-            <span class="links_name">Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class='bx bx-box' ></i>
-            <span class="links_name">Departments</span>
-          </a>
-        </li>
-        <li>
-          <a href="user">
-            <i class='bx bx-list-ul' ></i>
-            <span class="links_name">Users</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class='bx bx-pie-chart-alt-2' ></i>
-            <span class="links_name">Students</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class='bx bx-coin-stack' ></i>
-            <span class="links_name">Subjects</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class='bx bx-book-alt' ></i>
-            <span class="links_name">Exams</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class='bx bx-user' ></i>
-            <span class="links_name">Team</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class='bx bx-message' ></i>
-            <span class="links_name">Messages</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class='bx bx-heart' ></i>
-            <span class="links_name">Favrorites</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class='bx bx-cog' ></i>
-            <span class="links_name">Setting</span>
-          </a>
-        </li>
-        <li class="log_out">
-          <a href="#">
-            <i class='bx bx-log-out'></i>
-            <span class="links_name">Log out</span>
-          </a>
-        </li>
-      </ul>
-  </div>
+<%@page import= "java.sql.*, com.IMAP.DAO.DbConnection,com.IMAP.required.UserRole"%>
+<%!
+       String role;
+       String sql;
+       String user;
+%>
+<%
+	if((session.getAttribute("email") == null) && (session.getAttribute("username") == null))
+	{
+		response.sendRedirect("login");
+	}
+	else
+	{
+		role=new UserRole().getRole((String)session.getAttribute("email"),(String)session.getAttribute("username"))[0];
+		user=new UserRole().getRole((String)session.getAttribute("email"),(String)session.getAttribute("username"))[1];
+%>
+<style>
+[class*=sidebar-dark] .brand-link {
+    border-bottom: none;
+}
+</style>
+  <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 position-fixed">
+      <!-- Brand Logo -->
+      <a href="<%=request.getContextPath()%>/login" class="brand-link">
+        <img src="Assets/dist/img/Sidebar_logo.png"  alt="DigiXam" class="brand-image" style="max-height: 53px;" > <!-- class="brand-image img-circle elevation-3" style="opacity: .8" -->
+        <span class="brand-text text-light" style="font-size:120%">DigiXam</span>
+      </a>
   
-
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user (optional) 
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="Assets/dist/img/profile.jpg" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block text-light">  </a>
+          </div>
+        </div>
+  -->
+  
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <%if(!role.equals("student")){%>
+            <li class="nav-item ">
+              <a href="<%=request.getContextPath()%>/home" class="nav-link text-light">
+                <i class="nav-icon  fas fa-th "></i>
+                <p>
+                  Dashboard
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/user" class="nav-link text-light">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Teacher
+                </p>
+              </a>
+            </li>
+             <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/student" class="nav-link text-light">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Student
+                </p>
+              </a>
+            </li>
+            <%} %>
+            <%if(role.equals("admin") || role.equals("super-admin")){%>
+            <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/department" class="nav-link text-light">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Department
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/subject" class="nav-link text-light">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Subject
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/assign" class="nav-link text-light">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Subject Assigned
+                </p>
+              </a>
+            </li>
+            <%} %>
+            <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/examination" class="nav-link text-light">
+                <i class="nav-icon fa fa-graduation-cap"></i>
+                <p>
+                  Examination
+                </p>
+              </a>
+            </li>
+            
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+<%} %>
   

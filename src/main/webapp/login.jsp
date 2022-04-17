@@ -405,7 +405,7 @@ form.sign-in-form {
               <i class="fas fa-envelope"></i>
               <input required type="email" name= "email" placeholder="Email"/>
             </div>
-            <input type="hidden" name="role" value="teacher">
+            <input type="hidden" name="role" value="admin">
             <div class="input-field">
               <i class="fas fa-lock"></i>
               <input required type="password" name= "password" placeholder="Password" />

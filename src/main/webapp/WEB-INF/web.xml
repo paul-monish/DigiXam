@@ -2,6 +2,8 @@
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 <web-app>
+
+	
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
   	<servlet-name>LoginController</servlet-name>
@@ -84,6 +86,16 @@
   	<url-pattern>/forgotpassword</url-pattern>
   </servlet-mapping>
   <!-- End -->
+    <!--te.jsp -->
+  <servlet>
+  	<servlet-name>te</servlet-name>
+  	<jsp-file>/te.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>te</servlet-name>
+  	<url-pattern>/edit-profile</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
   <!--otp.jsp -->
   <servlet>
   	<servlet-name>otp</servlet-name>
@@ -92,6 +104,66 @@
   <servlet-mapping>
   	<servlet-name>otp</servlet-name>
   	<url-pattern>/otp</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+  <!-- examination.jsp -->
+   <servlet>
+  	<servlet-name>examination</servlet-name>
+  	<jsp-file>/examination.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>examination</servlet-name>
+  	<url-pattern>/examination</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+  <!-- subject.jsp -->
+   <servlet>
+  	<servlet-name>subject</servlet-name>
+  	<jsp-file>/subject.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>subject</servlet-name>
+  	<url-pattern>/subject</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+  <!-- subject.jsp -->
+   <servlet>
+  	<servlet-name>student</servlet-name>
+  	<jsp-file>/student.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>student</servlet-name>
+  	<url-pattern>/student</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+  <!-- department.jsp -->
+   <servlet>
+  	<servlet-name>department</servlet-name>
+  	<jsp-file>/department.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>department</servlet-name>
+  	<url-pattern>/department</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+    <!-- qsn.jsp -->
+   <servlet>
+  	<servlet-name>qsn</servlet-name>
+  	<jsp-file>/qsn.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>qsn</servlet-name>
+  	<url-pattern>/question</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+    <!-- assign.jsp -->
+   <servlet>
+  	<servlet-name>assign</servlet-name>
+  	<jsp-file>/assign.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>assign</servlet-name>
+  	<url-pattern>/assign</url-pattern>
   </servlet-mapping>
   <!-- End -->
   <!--newpassword.jsp -->
@@ -155,6 +227,102 @@
   	<description></description>
   	<servlet-class>com.IMAP.controller.AddUserController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>DepartmentController</servlet-name>
+  	<display-name>DepartmentController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.DepartmentController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>SubjectController</servlet-name>
+  	<display-name>SubjectController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.SubjectController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ExaminationController</servlet-name>
+  	<display-name>ExaminationController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.ExaminationController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DeleteDepartmentController</servlet-name>
+  	<display-name>DeleteDepartmentController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.DeleteDepartmentController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>EditDepartmentController</servlet-name>
+  	<display-name>EditDepartmentController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.EditDepartmentController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AddSubjectController</servlet-name>
+  	<display-name>AddSubjectController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.AddSubjectController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>EditSubjectController</servlet-name>
+  	<display-name>EditSubjectController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.EditSubjectController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DeleteSubjectController</servlet-name>
+  	<display-name>DeleteSubjectController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.DeleteSubjectController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AssignedUserDepartmentSubjectController</servlet-name>
+  	<display-name>AssignedUserDepartmentSubjectController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.AssignedUserDepartmentSubjectController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>EditAUSDCSubjectController</servlet-name>
+  	<display-name>EditAUSDCSubjectController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.EditAUSDCSubjectController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DeleteAUSDCSubjectController</servlet-name>
+  	<display-name>DeleteAUSDCSubjectController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.DeleteAUSDCSubjectController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>EditExaminationController</servlet-name>
+  	<display-name>EditExaminationController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.EditExaminationController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DeleteExaminationController</servlet-name>
+  	<display-name>DeleteExaminationController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.DeleteExaminationController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ReadFileController</servlet-name>
+  	<display-name>ReadFileController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.ReadFileController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Logout</servlet-name>
+  	<display-name>Logout</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.Logout</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>RemoveImageController</servlet-name>
+  	<display-name>RemoveImageController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.RemoveImageController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>user</servlet-name>
   	<url-pattern>/user</url-pattern>
@@ -162,6 +330,70 @@
   <servlet-mapping>
   	<servlet-name>AddUserController</servlet-name>
   	<url-pattern>/AddUserController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DepartmentController</servlet-name>
+  	<url-pattern>/DepartmentController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SubjectController</servlet-name>
+  	<url-pattern>/SubjectController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ExaminationController</servlet-name>
+  	<url-pattern>/ExaminationController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DeleteDepartmentController</servlet-name>
+  	<url-pattern>/DeleteDepartmentController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>EditDepartmentController</servlet-name>
+  	<url-pattern>/EditDepartmentController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AddSubjectController</servlet-name>
+  	<url-pattern>/AddSubjectController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>EditSubjectController</servlet-name>
+  	<url-pattern>/EditSubjectController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DeleteSubjectController</servlet-name>
+  	<url-pattern>/DeleteSubjectController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AssignedUserDepartmentSubjectController</servlet-name>
+  	<url-pattern>/AssignedUserDepartmentSubjectController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>EditAUSDCSubjectController</servlet-name>
+  	<url-pattern>/EditAUSDCSubjectController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DeleteAUSDCSubjectController</servlet-name>
+  	<url-pattern>/DeleteAUSDCSubjectController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>EditExaminationController</servlet-name>
+  	<url-pattern>/EditExaminationController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DeleteExaminationController</servlet-name>
+  	<url-pattern>/DeleteExaminationController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ReadFileController</servlet-name>
+  	<url-pattern>/ReadFileController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Logout</servlet-name>
+  	<url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>RemoveImageController</servlet-name>
+  	<url-pattern>/RemoveImageController</url-pattern>
   </servlet-mapping>
   <!-- End -->
 </web-app>
