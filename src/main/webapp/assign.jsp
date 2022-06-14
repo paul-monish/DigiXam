@@ -118,7 +118,7 @@
 		                      	<%while(rs.next())		
 								{	
 		                      	%>
-		                          <option value="<%=rs.getInt("id")%>"><%=rs.getInt("id")%><%=rs.getString("name")%></option>
+		                          <option value="<%=rs.getInt("id")%>"><%=rs.getString("name")%></option>
 		                          
 		                       <%} %>
 		                      </select>		
@@ -157,7 +157,7 @@
 		                      	<%while(rs.next())		
 								{	
 		                      	%>
-		                          <option value="<%=rs.getInt("id")%>"><%=rs.getInt("id")%><%=rs.getString("name")%></option>
+		                          <option value="<%=rs.getInt("id")%>"><%=rs.getString("name")%></option>
 		                          
 		                       <%} %>
 		                      </select>		
@@ -212,6 +212,19 @@
 								}
 							%>
 							<!-- /.user -->
+							
+							  <div class="form-group row">
+					                  <label for="staticEmail" class="col-sm-2 col-form-label">Class</label>
+					                  <div class="col-sm-10">
+					            		<select class="form-control" name="year">
+												<option selected disabled>----Choose Option----</option>
+					                          <option value="1st">1st Year</option>
+					                          <option value="2nd">2nd Year</option>
+					                      		<option value="3rd">3rd Year</option>
+					                      		<option value="4rth">4rth Year</option>
+					                      </select>		
+					                  </div>
+					                  </div>
 								 
 			          </div>
 			          <div class="modal-footer">
@@ -406,6 +419,19 @@
 								}
 							%>
 							<!-- /.user -->	  
+							
+							  <div class="form-group row">
+					                  <label for="staticEmail" class="col-sm-2 col-form-label">Class</label>
+					                  <div class="col-sm-10">
+					            		<select class="form-control" name="year">
+												<option selected disabled>----Choose Option----</option>
+					                          <option value="1st">1st Year</option>
+					                          <option value="2nd">2nd Year</option>
+					                      		<option value="3rd">3rd Year</option>
+					                      		<option value="4rth">4rth Year</option>
+					                      </select>		
+					                  </div>
+					                  </div>
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

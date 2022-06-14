@@ -50,11 +50,12 @@ public class LoginController extends HttpServlet {
 				session.setAttribute("username", u.getUsername());
 				session.setAttribute("email", u.getEmail());
 				UserRole role = new UserRole();
-				if (!role.getRole(u.getEmail(), u.getUsername())[0].equals("student")) {
-					response.sendRedirect("home");
-				} else {
-					response.sendRedirect("examination");
-				}
+				// if (!role.getRole(u.getEmail(), u.getUsername())[0].equals("student")) {
+				response.sendRedirect("home");
+				// }
+//				else {
+//					response.sendRedirect("examination");
+//				}
 			} else {
 				response.sendRedirect("login");
 			}

@@ -34,6 +34,10 @@ public class EditController extends HttpServlet {
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
+
+		String year = request.getParameter("year");
+		String dept_id = request.getParameter("dept");
+
 		Part profile = request.getPart("profile");
 		InputStream inputStream = null;
 		User u = new User();
@@ -67,7 +71,8 @@ public class EditController extends HttpServlet {
 		u.setId(Integer.parseInt(id));
 		u.setName(name);
 		u.setEmail(email);
-
+		u.setDept(Integer.parseInt(dept_id));
+		u.setYear(year);
 		DatabaseDAO dao;
 		try {
 			dao = new DatabaseDAO();

@@ -34,6 +34,7 @@ public class EditExaminationController extends HttpServlet {
 		String user_id = request.getParameter("user");
 		String sub_id = request.getParameter("sub");
 		String dept_id = request.getParameter("dept");
+		String year = request.getParameter("year");
 		System.out.println("id: " + id);
 		Part qsn = request.getPart("qsn");
 		InputStream inputStream = null;
@@ -57,7 +58,8 @@ public class EditExaminationController extends HttpServlet {
 		u.setDept_id(Integer.parseInt(dept_id));
 		u.setSub_id(Integer.parseInt(sub_id));
 		u.setUser_id(Integer.parseInt(user_id));
-		u.setQsn_name(qsn.getSubmittedFileName());
+		u.setYear(year);
+		u.setQsn_name(new String[] { qsn.getSubmittedFileName() });
 		u.setQsn(qsn);
 
 		DatabaseDAO dao;

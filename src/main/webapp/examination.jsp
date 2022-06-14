@@ -12,6 +12,8 @@
    String sp="super-admin";
    String ad="admin";
    String te="teacher";
+   int  uid;
+   int dept;
 %>
 <%
 	if((session.getAttribute("email") == null) && (session.getAttribute("username") == null))
@@ -20,7 +22,7 @@
 	}
 	else
 	{	
-		String sql2="SELECT role, name FROM users where email = ? OR username = ?";
+		String sql2="SELECT * FROM users where email = ? OR username = ?";
 		try{
 		DbConnection dbcon2 = new DbConnection();
 		Connection con2 = dbcon2.getConnection();
@@ -32,6 +34,8 @@
 		{
 			role = rs2.getString("role");
 			user = rs2.getString("name");
+			uid= rs2.getInt("id");
+			dept =rs2.getInt("dept_id");
 		}
 		rs2.close();
    		st2.close();
@@ -77,7 +81,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-      <%if(role.equals("admin")||role.equals("super-admin")){ %>
+      <%//if(role.equals("admin")||role.equals("super-admin")){ %>
      	<div class="card">
           <div class="card-header">
             <h3 class="card-title mt-2 font-weight-bold">Examination</h3>
@@ -98,14 +102,20 @@
 					        </div>
 					        <div class="modal-body">
 					        <%
-				
+							if(!role.equals("teacher")){
 							sql="SELECT * FROM subjects order by id desc";
-							
+							}
+							else{
+								sql="select u.id,u.name,t.id,t.dept_id,t.name from (select s.id,s.dept_id,s.name from subjects as s inner join department as d on s.dept_id=d.id) as t inner join users as u on t.dept_id=u.dept_id where u.id=?";
+							}
 							//out.println(sql);
 							try{
 							DbConnection dbcon2 = new DbConnection();
 							Connection con2 = dbcon2.getConnection();
 							PreparedStatement st2= con2.prepareStatement(sql);
+							if(role.equals("teacher")){
+							 st2.setInt(1, uid);
+							}
 							ResultSet rs2= st2.executeQuery();
 						  	//int i=1;
 						  	if(rs2.isBeforeFirst()){
@@ -120,10 +130,18 @@
 		            		<select class="form-control" name="sub">
 		                      	<%while(rs2.next())		
 								{	
+		                      		if(!role.equals("teacher")){
 		                      	%>
+		                      	
 		                          <option value="<%=rs2.getInt("id")%>"><%=rs2.getString("name")%></option>
 		                          
-		                       <%} %>
+		                       <%
+		                      		}
+		                      		else{
+		                      		%>
+		                      		 <option value="<%=rs2.getInt("t.id")%>"><%=rs2.getString("t.name")%></option>	
+		                      	<% }
+		                      		} %>
 		                      </select>		
 		                  </div>
 		                  </div>
@@ -138,7 +156,7 @@
 		               <!-- /.subjects -->
 					           
 					      <%
-					
+					      if(!role.equals("teacher")){
 					      sql="SELECT * FROM department order by id desc";
 					      
 					      //out.println(sql);
@@ -174,10 +192,31 @@
 					        }catch(Exception e){
 					            e.printStackTrace();
 					        }
+					      }else{
 					      %>
+					      <input type="hidden" name="dept" value="<%=dept%>">
+					      <%} %>
 					      <!-- /.department -->
+					       <div class="form-group row">
+					                  <label for="staticEmail" class="col-sm-2 col-form-label">Class</label>
+					                  <div class="col-sm-10">
+					            		<select class="form-control" name="year">
+												<option selected disabled>----Choose Option----</option>
+					                          <option value="1st">1st Year</option>
+					                          <option value="2nd">2nd Year</option>
+					                      		<option value="3rd">3rd Year</option>
+					                      		<option value="4rth">4rth Year</option>
+					                      </select>		
+					                  </div>
+					                  </div>
+					              <div class="form-group row">
+							      <label for="staticEmail" class="col-sm-2 col-form-label">Duration</label>
+							      <div class="col-sm-10">
+							      	<input type="number" class="form-control" id="inputPassword" name= "due" placeholder="Duration">
+							      </div>
+								  </div>
 					      <%
-					
+					      if(!role.equals("teacher")){
 					      sql="SELECT * FROM users where role=? order by id desc";
 					      
 					      //out.println(sql);
@@ -214,7 +253,11 @@
 					        }catch(Exception e){
 					            e.printStackTrace();
 					        }
+					      }else{
+					    	  
 					      %>
+					      <input type="hidden" name="user" value="<%=uid%>">
+					      <%} %>
 					      <!-- /.user -->	  
 					      <input type="file" name="qsn">
 					        </div>
@@ -245,13 +288,21 @@
               </thead>
               <tbody>
               <%
+              if(!role.equals("teacher")){
               sql="select * from examination as e inner join subjects as s on e.sub_id=s.id inner join department as d on e.dept_id=d.id inner join users u on e.user_id=u.id order by e.id desc";
-              
+              }
+              else{
+                  sql="select * from examination as e inner join subjects as s on e.sub_id=s.id inner join department as d on e.dept_id=d.id inner join users u on e.user_id=u.id where user_id=? order by e.id desc";
+
+              }
 				//out.println(sql);
 				try{
 				DbConnection dbcon = new DbConnection();
 				Connection con = dbcon.getConnection();
 				PreparedStatement st= con.prepareStatement(sql);
+				 if(role.equals("teacher")){
+				st.setInt(1, uid);
+				 }
 				ResultSet rs= st.executeQuery();
 			  	int i=1;
 			  	if(!rs.isBeforeFirst()){
@@ -266,18 +317,20 @@
 			      <td><%=rs.getString("u.email")%></td>
 			      <td><%=rs.getString("d.name")%></td>
 			      <td><%=rs.getString("s.name")%></td>
-			      <td class="text-truncate"><%= new Gson().fromJson(rs.getString("e.qsn_name"), String[].class)[0].split("_1")[0].concat(".png")%></td>
+			      <td class="text-truncate"><%= new Gson().fromJson(rs.getString("e.qsn_name"), String[].class)[0].split("_1")[0]%></td>
 			      <td>
+			      <div class="row">
+			      	<div class="col-1">
 			      <!-- Button trigger modal -->
-					<a class="actionCust" data-toggle="modal" data-target="#exampleModalCenter<%=rs.getInt("e.id")%>" style="cursor:pointer;">
+					<a class="actionCust" data-toggle="modal" data-target="#editmodal<%=rs.getInt("e.id")%>" style="cursor:pointer;">
 					  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 					</a>
 					<!-- Modal -->
-					<div class="modal fade" id="exampleModalCenter<%=rs.getInt("e.id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle<%=rs.getInt("e.id")%>" aria-hidden="true">
+					<div class="modal fade" id="editmodal<%=rs.getInt("e.id")%>" tabindex="-1" role="dialog" aria-labelledby="editmodal<%=rs.getInt("e.id")%>" aria-hidden="true">
 					  <div class="modal-dialog modal-dialog-centered" role="document">
 					    <div class="modal-content">
 					     <%
-					     String sql1="select * from examination as e inner join subjects as s on e.sub_id=s.id inner join department as d on e.dept_id=d.id inner join users u on e.user_id=u.id where e.id=?;";
+					     String sql1="select * from examination as e inner join subjects as s on e.sub_id=s.id inner join department as d on e.dept_id=d.id inner join users u on e.user_id=u.id where e.id=?";
 					      
 						  	try{
 						  	DbConnection dbcon1 = new DbConnection();
@@ -376,6 +429,24 @@
 					        }
 					      %>
 					      <!-- /.department -->
+					           <div class="form-group row">
+					                  <label for="staticEmail" class="col-sm-2 col-form-label">Class</label>
+					                  <div class="col-sm-10">
+					            		<select class="form-control" name="year">
+												<option selected disabled>----Choose Option----</option>
+					                          <option value="1st">1st Year</option>
+					                          <option value="2nd">2nd Year</option>
+					                      		<option value="3rd">3rd Year</option>
+					                      		<option value="4rth">4rth Year</option>
+					                      </select>		
+					                  </div>
+					                  </div>
+					              <div class="form-group row">
+							      <label for="staticEmail" class="col-sm-2 col-form-label">Duration</label>
+							      <div class="col-sm-10">
+							      	<input type="number" class="form-control" value="<%=rs1.getInt("duration")%>" id="inputPassword5" name= "due" >
+							      </div>
+								  </div>
 					      <%
 					
 					      sql4="SELECT * FROM users where role=? order by id desc";
@@ -437,18 +508,22 @@
 			   			e.printStackTrace();
 			   		}
 				%>  
-				
+				</div>
+				<div class="col-1">
 			   		<span class="actionCust ml-3 ">
 			   			<a href="<%=request.getContextPath()%>/DeleteExaminationController?id=<%=rs.getInt("e.id")%>" style="cursor:pointer;">
 			   				<i class="fa fa-trash-o" aria-hidden="true"></i>
 			   			</a>
 			   		</span>
+			   	</div>
+			   	<div class="col-1">
 			   		<span class="actionCust float-right">
-			   			<a href="<%=request.getContextPath()%>/ReadFileController?id=<%=rs.getInt("id")%>" style="cursor:pointer;">
+			   			<a href="<%=request.getContextPath()%>/ReadFileController?qid=<%=rs.getInt("id")%>" style="cursor:pointer;">
 			   				<i class="fa fa-eye" aria-hidden="true"></i>
 			   			</a>
 			   		</span>
-			   		
+			   		</div>
+			   		</div>
 			     </td>
 			    </tr>
 			    <%
@@ -465,197 +540,10 @@
             </table>
           </div>
       </div> 
-      <%} %>
+      <%//} %>
       
-      <%
-if(role.equals("teacher")){
-sql="SELECT * FROM subjects order by id desc";
+    
 
-//out.println(sql);
-try{
-DbConnection dbcon = new DbConnection();
-Connection con = dbcon.getConnection();
-PreparedStatement st= con.prepareStatement(sql);
-ResultSet rs= st.executeQuery();
-  int i=1;
-  if(rs.isBeforeFirst()){
-    out.println(" ");
-  }
-  while(rs.next())		
-{		
-%>
-<div class="accordion" id="accordionExample">
-<div class="card">
-<div class="card-header" id="headingOne">
-  <h2 class="mb-0">
-    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-      <%=rs.getString("name") %>
-    </button>
-  </h2>
-</div>
-
-<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-  <div class="card-body">
-  
-     <!-- Button trigger modal -->
-  <a class="actionCust btn" data-toggle="modal" data-target="#exampleModalCenter<%=rs.getInt("id")%>" style="cursor:pointer;">
-    add
-  </a>
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter<%=rs.getInt("id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle<%=rs.getInt("id")%>" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-      <form action="ExaminationController" method="post" enctype="multipart/form-data">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Subject</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-        
-            <input type="hidden" name="sub" value="<%=rs.getInt("id")%>">
-           <%
-
-      sql="SELECT * FROM department order by id desc";
-      
-      //out.println(sql);
-      try{
-      DbConnection dbcon3 = new DbConnection();
-      Connection con3 = dbcon3.getConnection();
-      PreparedStatement st3= con3.prepareStatement(sql);
-      ResultSet rs3= st3.executeQuery();
-        //int i=1;
-        if(rs3.isBeforeFirst()){
-          out.println(" ");
-        }
-          
-      %>
-                  
-      <div class="form-group row">
-              <label for="staticEmail" class="col-sm-2 col-form-label">Departments</label>
-              <div class="col-sm-10">
-            <select class="form-control" name="dept">
-                    <%while(rs3.next())		
-        {	
-                    %>
-                      <option value="<%=rs3.getInt("id")%>"><%=rs3.getInt("id")%><%=rs3.getString("name")%></option>
-                      
-                   <%} %>
-                  </select>		
-              </div>
-              </div>
-              <%
-          rs3.close();
-        st3.close();
-        con3.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-      %>
-      <!-- /.department -->
-      <%
-
-      sql="SELECT * FROM users where role=? order by id desc";
-      
-      //out.println(sql);
-      try{
-      DbConnection dbcon4 = new DbConnection();
-      Connection con4 = dbcon4.getConnection();
-      PreparedStatement st4= con4.prepareStatement(sql);
-      st4.setString(1, "teacher");
-      ResultSet rs4= st4.executeQuery();
-        //int i=1;
-        if(rs4.isBeforeFirst()){
-          out.println(" ");
-        }
-          
-      %>
-                  
-      <div class="form-group row">
-              <label for="staticEmail" class="col-sm-2 col-form-label">Teachers</label>
-              <div class="col-sm-10">
-            <select class="form-control" name="user">
-                    <%while(rs4.next())		
-        {	
-                    %>
-                      <option value="<%=rs4.getInt("id")%>"><%=rs4.getString("email")%><%=rs4.getInt("id")%></option>
-                      
-                   <%} %>
-                  </select>		
-              </div>
-              </div>
-              <%
-          rs4.close();
-        st4.close();
-        con4.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-      %>
-      <!-- /.user -->	  
-      <input type="file" name="qsn">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <!--<button type="button" class="btn btn-primary">Save changes</button>  -->
-        <input type="submit" class="btn btn-info" value="Update">
-        </div>
-        </form>
-        
-      </div>
-    </div>
-  </div>
-  
-  <%
-
-      sql="select * from examination as e inner join subjects as s on e.sub_id=s.id inner join department as d on e.dept_id=d.id inner join users u on e.user_id=u.id where e.sub_id=? ;";
-      
-      //out.println(sql);
-      try{
-      DbConnection dbcon4 = new DbConnection();
-      Connection con4 = dbcon4.getConnection();
-      PreparedStatement st4= con4.prepareStatement(sql);
-      st4.setInt(1, rs.getInt("id"));
-      ResultSet rs4= st4.executeQuery();
-        //int i=1;
-        if(rs4.isBeforeFirst()){
-          out.println(" ");
-        }
-          
-      %>
-      <%while(rs4.next())		
-        {	
-                    %>
-                    <% if(rs4.getBlob("question").length()!=0){%>
-                      <a href="<%=request.getContextPath()%>/qsn?file=<%=rs4.getString("qsn_name")%>"><div><%=rs4.getString("qsn_name") %></div></a>
-                      <div><%=rs4.getString("d.name") %></div>
-                      <div><%=rs4.getString("u.email") %></div>
-                    <%} %>  
-                   <%} %>
-                   <%
-          rs4.close();
-        st4.close();
-        con4.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-      %>
-  </div>
-</div>
-</div>
-</div>
-<%
-  i++;
-  }
-  rs.close();
-st.close();
-con.close();
-}catch(Exception e){
-    e.printStackTrace();
-  }
-}
-%>
       
       
       </div>

@@ -5,6 +5,15 @@ public class AssignedUserDepartmentSubject {
 	private int user_id;
 	private int sub_id;
 	private int dept_id;
+	private String year;
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
 
 	public int getId() {
 		return id;

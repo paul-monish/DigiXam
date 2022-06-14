@@ -5,6 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Bootstrap CSS -->
 <!-- Google Font: Source Sans Pro -->
@@ -19,8 +20,6 @@
 <link rel="stylesheet" href="Assets/dist/css/adminlte.min.css">
 <title>DigiXam</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<style type="text/css">
 
-</style>
 </head>
 <body class="hold-transition sidebar-mini">

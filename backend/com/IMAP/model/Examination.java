@@ -7,6 +7,25 @@ public class Examination {
 	private int user_id;
 	private int sub_id;
 	private int dept_id;
+	private String year;
+	private int duration;
+	private String name;
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
 
 	private Part qsn;
 

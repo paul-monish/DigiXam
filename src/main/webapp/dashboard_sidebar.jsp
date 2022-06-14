@@ -21,6 +21,7 @@
     border-bottom: none;
 }
 </style>
+
   <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4 position-fixed">
       <!-- Brand Logo -->
@@ -47,7 +48,7 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
-            <%if(!role.equals("student")){%>
+            
             <li class="nav-item ">
               <a href="<%=request.getContextPath()%>/home" class="nav-link text-light">
                 <i class="nav-icon  fas fa-th "></i>
@@ -56,6 +57,33 @@
                 </p>
               </a>
             </li>
+            <%if(role.equals("student")) {%>
+             <div class="datetime">
+		      <div class="date">
+		        <span id="dayname">Day</span>,
+		        <span id="month">Month</span>
+		        <span id="daynum">00</span>,
+		        <span id="year">Year</span>
+		      </div>
+		      <div class="time">
+		        <span id="hour">00</span>:
+		        <span id="minutes">00</span>:
+		        <span id="seconds">00</span>
+		        <span id="period">AM</span>
+		      </div>
+		    </div>
+            <%} %>
+            <%if(role.equals("super-admin")) {%>
+            <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/admin" class="nav-link text-light">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Admins
+                </p>
+              </a>
+            </li>
+            <%} %>
+            <%if(role.equals("super-admin") || role.equals("admin")) {%>
             <li class="nav-item">
               <a href="<%=request.getContextPath()%>/user" class="nav-link text-light">
                 <i class="nav-icon fas fa-user"></i>
@@ -64,6 +92,8 @@
                 </p>
               </a>
             </li>
+            <%} %>
+            <%if(!role.equals("student")) {%>
              <li class="nav-item">
               <a href="<%=request.getContextPath()%>/student" class="nav-link text-light">
                 <i class="nav-icon fas fa-user"></i>
@@ -72,8 +102,7 @@
                 </p>
               </a>
             </li>
-            <%} %>
-            <%if(role.equals("admin") || role.equals("super-admin")){%>
+             <%if(role.equals("super-admin") || role.equals("admin")) {%>
             <li class="nav-item">
               <a href="<%=request.getContextPath()%>/department" class="nav-link text-light">
                 <i class="nav-icon fas fa-user"></i>
@@ -82,6 +111,7 @@
                 </p>
               </a>
             </li>
+            <%} %>
             <li class="nav-item">
               <a href="<%=request.getContextPath()%>/subject" class="nav-link text-light">
                 <i class="nav-icon fas fa-user"></i>
@@ -90,6 +120,7 @@
                 </p>
               </a>
             </li>
+             <%if(role.equals("super-admin") || role.equals("admin")) {%>
             <li class="nav-item">
               <a href="<%=request.getContextPath()%>/assign" class="nav-link text-light">
                 <i class="nav-icon fas fa-user"></i>
@@ -107,12 +138,71 @@
                 </p>
               </a>
             </li>
-            
+             <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/answers" class="nav-link text-light">
+                <i class="nav-icon fa fa-graduation-cap"></i>
+                <p>
+                  Answers
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/result" class="nav-link text-light">
+                <i class="nav-icon fa fa-graduation-cap"></i>
+                <p>
+                  Result
+                </p>
+              </a>
+            </li>
+           <%} %>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
     </aside>
-<%} %>
+    <script type="text/javascript">
+
+function updateClock(){
+    var now = new Date();
+    var dname = now.getDay(),
+        mo = now.getMonth(),
+        dnum = now.getDate(),
+        yr = now.getFullYear(),
+        hou = now.getHours(),
+        min = now.getMinutes(),
+        sec = now.getSeconds(),
+        pe = "AM";
+
+        if(hou >= 12){
+          pe = "PM";
+        }
+        if(hou == 0){
+          hou = 12;
+        }
+        if(hou > 12){
+          hou = hou - 12;
+        }
+
+        Number.prototype.pad = function(digits){
+          for(var n = this.toString(); n.length < digits; n = 0 + n);
+          return n;
+        }
+
+        var months = ["January", "February", "March", "April", "May", "June", "July", "Augest", "September", "October", "November", "December"];
+        var week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var ids = ["dayname", "month", "daynum", "year", "hour", "minutes", "seconds", "period"];
+        var values = [week[dname], months[mo], dnum.pad(2), yr, hou.pad(2), min.pad(2), sec.pad(2), pe];
+        for(var i = 0; i < ids.length; i++)
+        document.getElementById(ids[i]).firstChild.nodeValue = values[i];
+  }
+
+    updateClock();
+    window.setInterval("updateClock()", 1);
+ 
+		
+
+
+</script>
+<% }%>
   

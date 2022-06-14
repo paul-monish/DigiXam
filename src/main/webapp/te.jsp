@@ -85,6 +85,7 @@
 			      </div>
 			      <div class="modal-body">
 		      		<input type="hidden" name="id" value="<%=id%>">
+		      			<%if(!role.equals("student")){ %>
 		      		  <div class="form-group row">
 					    <label for="inputPassword" class="col-sm-2 col-form-label">Email</label>
 					    <div class="col-sm-10">
@@ -98,6 +99,63 @@
 				      	<input type="text" class="form-control" id="inputPassword" value='<%=user%>' name= "name" placeholder="Name">
 				      </div>
 					 </div>	
+					 
+					 <!-- department -->	
+		                 <%
+				
+							sql="SELECT * FROM department order by id desc";
+							
+							//out.println(sql);
+							try{
+							DbConnection dbcon = new DbConnection();
+							Connection con = dbcon.getConnection();
+							PreparedStatement st= con.prepareStatement(sql);
+							ResultSet rs= st.executeQuery();
+						  	int i=1;
+						  	if(rs.isBeforeFirst()){
+						  		out.println(" ");
+						  	}
+						  		
+						  %>
+		                      
+						  <div class="form-group row">
+		                  <label for="staticEmail" class="col-sm-2 col-form-label">Departments</label>
+		                  <div class="col-sm-10">
+		            		<select class="form-control" name="dept">
+		                      	<%while(rs.next())		
+								{	
+		                      	%>
+		                          <option value="<%=rs.getInt("id")%>"><%=rs.getString("name")%></option>
+		                          
+		                       <%} %>
+		                      </select>		
+		                  </div>
+		                  </div>
+		                  <%
+							  	rs.close();
+								st.close();
+								con.close();
+								}catch(Exception e){
+										e.printStackTrace();
+								}
+							%>
+							<!-- /.department -->
+							
+							<!-- class -->
+							    <div class="form-group row">
+					                  <label for="staticEmail" class="col-sm-2 col-form-label">Class</label>
+					                  <div class="col-sm-10">
+					            		<select class="form-control" name="year">
+												<option selected disabled>----Choose Option----</option>
+					                          <option value="1st">1st Year</option>
+					                          <option value="2nd">2nd Year</option>
+					                      		<option value="3rd">3rd Year</option>
+					                      		<option value="4rth">4rth Year</option>
+					                      </select>		
+				                  </div>
+				                  </div>
+							<!-- ./class -->
+					 <%} %>
 					 <input type="file" name="profile">
 					 <a href="<%=request.getContextPath()%>/RemoveImageController?id=<%=id%>" class="btn">remove</a>  
 			      </div>

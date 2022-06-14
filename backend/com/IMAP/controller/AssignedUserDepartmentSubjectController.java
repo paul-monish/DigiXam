@@ -31,14 +31,14 @@ public class AssignedUserDepartmentSubjectController extends HttpServlet {
 		String dept = request.getParameter("dept");
 		String sub = request.getParameter("sub");
 		String user = request.getParameter("user");
-
-		System.out.println(dept + sub + user);
+		String year = request.getParameter("year");
+		System.out.println(dept + sub + user + year);
 
 		UserDepartmentSubject uds = new UserDepartmentSubject();
 		uds.setDept_id(Integer.parseInt(dept));
 		uds.setSub_id(Integer.parseInt(sub));
 		uds.setUser_id(Integer.parseInt(user));
-
+		uds.setYear(year);
 		try {
 			DatabaseDAO dao = new DatabaseDAO();
 			dao.assigned(uds);

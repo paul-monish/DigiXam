@@ -57,6 +57,15 @@
   </servlet-mapping>
   
   <!-- Remove Extensions -->
+  <!--index.jsp -->
+  <servlet>
+  	<servlet-name>index</servlet-name>
+  	<jsp-file>/index.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>index</servlet-name>
+  	<url-pattern>/index</url-pattern>
+  </servlet-mapping>
   <!--login.jsp -->
   <servlet>
   	<servlet-name>login</servlet-name>
@@ -76,6 +85,69 @@
   	<url-pattern>/home</url-pattern>
   </servlet-mapping>
   <!-- End -->
+<!--instruction.jsp -->
+  <servlet>
+  	<servlet-name>instruction</servlet-name>
+  	<jsp-file>/instruction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>instruction</servlet-name>
+  	<url-pattern>/instruction</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+  
+   <!--result.jsp -->
+  <servlet>
+  	<servlet-name>result</servlet-name>
+  	<jsp-file>/result.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>result</servlet-name>
+  	<url-pattern>/result</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+  
+   <!--result.jsp -->
+  <servlet>
+  	<servlet-name>answers</servlet-name>
+  	<jsp-file>/answers.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>answers</servlet-name>
+  	<url-pattern>/answers</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+   <!--answer.jsp -->
+  <servlet>
+  	<servlet-name>answer</servlet-name>
+  	<jsp-file>/answer.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>answer</servlet-name>
+  	<url-pattern>/answer</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+  <!--student-examination.jsp -->
+  <servlet>
+  	<servlet-name>student-examination</servlet-name>
+  	<jsp-file>/student-examination.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>student-examination</servlet-name>
+  	<url-pattern>/student-examination</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+   <!--result.jsp -->
+  <servlet>
+  	<servlet-name>admin</servlet-name>
+  	<jsp-file>/admin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>admin</servlet-name>
+  	<url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+  
   <!--forgotpassword.jsp -->
   <servlet>
   	<servlet-name>forgotpassword</servlet-name>
@@ -166,6 +238,40 @@
   	<url-pattern>/assign</url-pattern>
   </servlet-mapping>
   <!-- End -->
+  
+    <!--screen1.jsp -->
+  <servlet>
+  	<servlet-name>screen_one</servlet-name>
+  	<jsp-file>/screen_one.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>screen_one</servlet-name>
+  	<url-pattern>/screen1</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+  
+  <!--screen2.jsp -->
+  <servlet>
+  	<servlet-name>two</servlet-name>
+  	<jsp-file>/two.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>two</servlet-name>
+  	<url-pattern>/screen2</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+    
+    <!--screen3.jsp -->
+  <servlet>
+  	<servlet-name>three</servlet-name>
+  	<jsp-file>/three.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>three</servlet-name>
+  	<url-pattern>/screen3</url-pattern>
+  </servlet-mapping>
+  <!-- End -->
+  
   <!--newpassword.jsp -->
   <servlet>
   	<servlet-name>newpassword</servlet-name>
@@ -323,6 +429,36 @@
   	<description></description>
   	<servlet-class>com.IMAP.controller.RemoveImageController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>StudentReadViewController</servlet-name>
+  	<display-name>StudentReadViewController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.StudentReadViewController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AnswerController</servlet-name>
+  	<display-name>AnswerController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.AnswerController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AddMarksController</servlet-name>
+  	<display-name>AddMarksController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.AddMarksController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>EditMarksController</servlet-name>
+  	<display-name>EditMarksController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.EditMarksController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DeleteMarksController</servlet-name>
+  	<display-name>DeleteMarksController</display-name>
+  	<description></description>
+  	<servlet-class>com.IMAP.controller.DeleteMarksController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>user</servlet-name>
   	<url-pattern>/user</url-pattern>
@@ -394,6 +530,26 @@
   <servlet-mapping>
   	<servlet-name>RemoveImageController</servlet-name>
   	<url-pattern>/RemoveImageController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>StudentReadViewController</servlet-name>
+  	<url-pattern>/StudentReadViewController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AnswerController</servlet-name>
+  	<url-pattern>/AnswerController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AddMarksController</servlet-name>
+  	<url-pattern>/AddMarksController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>EditMarksController</servlet-name>
+  	<url-pattern>/EditMarksController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DeleteMarksController</servlet-name>
+  	<url-pattern>/DeleteMarksController</url-pattern>
   </servlet-mapping>
   <!-- End -->
 </web-app>

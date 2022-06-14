@@ -94,7 +94,7 @@
 		
 		<div class="card text-center">
 		  <div class="card-header">
-		    <%=new DatabaseDAO().getSubjectName(Integer.parseInt((String)session.getAttribute("id"))).toUpperCase()%>
+		    <%=new DatabaseDAO().getSubjectName(Integer.parseInt((String)session.getAttribute("qid"))).toUpperCase()%>
 		  </div>
 		  <div class="card-body">
 		<%for(String f :file) {%>

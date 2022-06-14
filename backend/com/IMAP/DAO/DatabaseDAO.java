@@ -5,11 +5,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.IMAP.model.Answer;
 import com.IMAP.model.AssignedUserDepartmentSubject;
 import com.IMAP.model.Department;
 import com.IMAP.model.Examination;
 import com.IMAP.model.ForgotPasswordModel;
+import com.IMAP.model.Marks;
 import com.IMAP.model.NewPasswordModel;
 import com.IMAP.model.Subject;
 import com.IMAP.model.User;
@@ -27,13 +31,15 @@ public class DatabaseDAO {
 	}
 
 	public void registration(User u) throws SQLException {
-		String sql = "INSERT INTO users (role,name,email,username,password) VALUES (?,?,?,?,md5(?))";
+		String sql = "INSERT INTO users (role,name,email,username,password,dept_id,class) VALUES (?,?,?,?,md5(?),?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, u.getRole());
 		st.setString(2, u.getName());
 		st.setString(3, u.getEmail());
 		st.setString(4, u.getUsername());
 		st.setString(5, u.getPassword());
+		st.setInt(6, u.getDept());
+		st.setString(7, u.getYear());
 		int i = st.executeUpdate();
 		System.out.println(i + " row inserted succesfully.");
 
@@ -101,13 +107,15 @@ public class DatabaseDAO {
 	}
 
 	public int editUser(User u, InputStream is) throws SQLException {
-		String sql = "UPDATE users set name = ?, email = ?,profile_img=?, profile_path=? where id=?";
+		String sql = "UPDATE users set name = ?, email = ?,profile_img=?, profile_path=?, dept_id=?, class=? where id=?";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, u.getName());
 		st.setString(2, u.getEmail());
 		st.setString(3, u.getProfile_name());
 		st.setString(4, u.getProfile_path());
-		st.setInt(5, u.getId());
+		st.setInt(5, u.getDept());
+		st.setString(6, u.getYear());
+		st.setInt(7, u.getId());
 		int s = st.executeUpdate();
 		System.out.println(s);
 		try {
@@ -160,9 +168,12 @@ public class DatabaseDAO {
 	}
 
 	public void insertSubject(Subject d) throws SQLException {
-		String sql = "INSERT INTO subjects (name) VALUES (?)";
+		String sql = "INSERT INTO subjects (name,year,sem,dept_id) VALUES (?,?,?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, d.getName());
+		st.setString(2, d.getYear());
+		st.setString(3, d.getSem());
+		st.setInt(4, d.getDept());
 		int i = st.executeUpdate();
 		System.out.println(i + " row inserted succesfully.");
 
@@ -184,10 +195,13 @@ public class DatabaseDAO {
 	}
 
 	public int editSubject(Subject d) throws SQLException {
-		String sql = "UPDATE subjects set name = ? where id=?";
+		String sql = "UPDATE subjects set name = ?,year= ?,sem= ?, dept_id=? where id=?";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, d.getName());
-		st.setInt(2, d.getId());
+		st.setString(2, d.getYear());
+		st.setString(3, d.getSem());
+		st.setInt(4, d.getDept());
+		st.setInt(5, d.getId());
 		int s = st.executeUpdate();
 		System.out.println(s);
 		try {
@@ -200,11 +214,12 @@ public class DatabaseDAO {
 	}
 
 	public void assigned(UserDepartmentSubject uds) throws SQLException {
-		String sql = "INSERT INTO user_department_subject (user_id,dept_id,sub_id) VALUES (?,?,?)";
+		String sql = "INSERT INTO user_department_subject (user_id,dept_id,sub_id,year) VALUES (?,?,?,?)";
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setInt(1, uds.getUser_id());
 		st.setInt(2, uds.getDept_id());
 		st.setInt(3, uds.getSub_id());
+		st.setString(4, uds.getYear());
 		int i = st.executeUpdate();
 		System.out.println(i + " row inserted succesfully.");
 	}
@@ -225,13 +240,14 @@ public class DatabaseDAO {
 	}
 
 	public int editAssigned(AssignedUserDepartmentSubject uds) throws SQLException {
-		String sql = "UPDATE user_department_subject set user_id = ?,dept_id=?,sub_id=? where id=?";
+		String sql = "UPDATE user_department_subject set user_id = ?,dept_id=?,sub_id=?,class=? where id=?";
 		PreparedStatement st = con.prepareStatement(sql);
 
 		st.setInt(1, uds.getUser_id());
 		st.setInt(2, uds.getDept_id());
 		st.setInt(3, uds.getSub_id());
-		st.setInt(4, uds.getId());
+		st.setString(4, uds.getYear());
+		st.setInt(5, uds.getId());
 		int s = st.executeUpdate();
 		System.out.println(s);
 		try {
@@ -244,12 +260,12 @@ public class DatabaseDAO {
 	}
 
 	public void insertExam(Examination e, InputStream is) {
-		String sql = "INSERT INTO examination (user_id,dept_id,sub_id,qsn_name,question) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO examination (user_id,dept_id,sub_id,qsn_name,question,year,duration,date,time) VALUES (?,?,?,?,?,?,?,?,?)";
 		try {
 
-//			java.util.Date utilDate = new java.util.Date();
-//	        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-//	        java.sql.Time sqlTime = new java.sql.Time(utilDate.getTime());
+			java.util.Date utilDate = new java.util.Date();
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			java.sql.Time sqlTime = new java.sql.Time(utilDate.getTime());
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setInt(1, e.getUser_id());
 			st.setInt(2, e.getDept_id());
@@ -263,10 +279,11 @@ public class DatabaseDAO {
 				st.setBinaryStream(5, is, (int) e.getQsn().getSize());
 
 			}
+			st.setString(6, e.getYear());
+			st.setInt(7, e.getDuration());
+			st.setDate(8, sqlDate);
+			st.setTime(9, sqlTime);
 
-//			st.setDate(5, sqlDate);
-//			st.setTime(6, sqlTime);
-//			st.setString(7, h.getAuthorName());
 			int i = st.executeUpdate();
 			System.out.println(i + "row inserted for upload table");
 		} catch (Exception ex) {
@@ -290,8 +307,12 @@ public class DatabaseDAO {
 	}
 
 	public int editExamination(Examination e, InputStream is) throws SQLException {
-		String sql = "UPDATE examination set user_id = ?,dept_id=?,sub_id=?,qsn_name=?,question=? where id=?";
+		String sql = "UPDATE examination set user_id = ?,dept_id=?,sub_id=?,qsn_name=?,question=?,year=?,duration=?,date=?,time=? where id=?";
 		PreparedStatement st = con.prepareStatement(sql);
+
+		java.util.Date utilDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		java.sql.Time sqlTime = new java.sql.Time(utilDate.getTime());
 
 		st.setInt(1, e.getUser_id());
 		st.setInt(2, e.getDept_id());
@@ -304,7 +325,11 @@ public class DatabaseDAO {
 			st.setBinaryStream(5, is, (int) e.getQsn().getSize());
 
 		}
-		st.setInt(6, e.getId());
+		st.setString(6, e.getYear());
+		st.setInt(7, e.getDuration());
+		st.setDate(8, sqlDate);
+		st.setTime(9, sqlTime);
+		st.setInt(10, e.getId());
 		int s = st.executeUpdate();
 		System.out.println(s);
 		try {
@@ -328,6 +353,18 @@ public class DatabaseDAO {
 
 	}
 
+	public String[] getAnswer(int id) throws SQLException {
+		String sql = "SELECT * FROM answer WHERE id=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, id);
+		ResultSet rs = st.executeQuery();
+		if (rs.next()) {
+			return new String[] { "true", rs.getString("ans_name") };
+		} else
+			return new String[] { "false", null };
+
+	}
+
 	public String getSubjectName(int id) throws SQLException {
 		String sql = "SELECT * FROM examination as e inner join subjects as s on e.sub_id=s.id WHERE e.id=?";
 		PreparedStatement st = con.prepareStatement(sql);
@@ -335,6 +372,18 @@ public class DatabaseDAO {
 		ResultSet rs = st.executeQuery();
 		if (rs.next()) {
 			return rs.getString("s.name");
+		} else
+			return null;
+
+	}
+
+	public String getAnswerName(int id) throws SQLException {
+		String sql = "select* from subjects where id=(SELECT sub_id as sid FROM answer as a inner join examination as e on a.qsn_id=e.id WHERE a.id=?)";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, id);
+		ResultSet rs = st.executeQuery();
+		if (rs.next()) {
+			return rs.getString("name");
 		} else
 			return null;
 
@@ -353,5 +402,115 @@ public class DatabaseDAO {
 			e.printStackTrace();
 		}
 		return s;
+	}
+
+	public void insertAnswer(Answer e, InputStream is) {
+		String sql = "INSERT INTO answer (ans_name,ans,qsn_id,date,time,user_id) VALUES (?,?,?,?,?,?)";
+		try {
+
+			java.util.Date utilDate = new java.util.Date();
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			java.sql.Time sqlTime = new java.sql.Time(utilDate.getTime());
+			PreparedStatement st = con.prepareStatement(sql);
+
+			if (is != null) {
+				String j = new Gson().toJson(e.getAns_name());
+				System.out.println(j);
+				// Array anArray = con.createArrayOf("VARCHAR", e.getQsn_name());
+				st.setString(1, j);
+				st.setBinaryStream(2, is, (int) e.getAns().getSize());
+
+			}
+			st.setInt(3, e.getFile_id());
+			st.setDate(4, sqlDate);
+			st.setTime(5, sqlTime);
+			st.setInt(6, e.getUser_id());
+
+			int i = st.executeUpdate();
+			System.out.println(i + "row inserted for upload table");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public void addMarks(Marks u) throws SQLException {
+		String sql = "INSERT INTO marks (ans_id,qsn_id,marks) VALUES (?,?,?)";
+		PreparedStatement st = con.prepareStatement(sql);
+
+		st.setInt(1, u.getAid());
+		st.setInt(2, u.getEid());
+		st.setInt(3, u.getMarks());
+		int i = st.executeUpdate();
+		System.out.println(i + " row inserted succesfully.");
+
+	}
+
+	public int deleteMarks(int id) throws SQLException {
+		String sql = "DELETE from marks where qsn_id=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, id);
+		int s = st.executeUpdate();
+		System.out.println(s);
+		try {
+			st.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return s;
+	}
+
+	public int editMarks(Marks u) throws SQLException {
+		String sql = "UPDATE marks set marks=? where ans_id=? and qsn_id=?,";
+		PreparedStatement st = con.prepareStatement(sql);
+
+		st.setInt(1, u.getMarks());
+		st.setInt(2, u.getAid());
+		st.setInt(3, u.getEid());
+		int s = st.executeUpdate();
+		System.out.println(s);
+		try {
+			st.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return s;
+	}
+
+	public HashMap<String, ArrayList<String>> getEmails(User u) throws SQLException {
+		String sql = "SELECT * FROM users WHERE dept_id=? and class=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		System.out.println(u.getDept() + u.getYear());
+		st.setInt(1, u.getDept());
+		st.setString(2, u.getYear());
+		ResultSet rs = st.executeQuery();
+		// List<String> email = new ArrayList<String>();
+		// List<HashMap<String, String>> us = new ArrayList<HashMap<String, String>>();
+		// HashMap<String, String> user = new HashMap<String, String>();
+		ArrayList<String> em = new ArrayList<String>();
+		ArrayList<String> un = new ArrayList<String>();
+		ArrayList<String> n = new ArrayList<String>();
+		ArrayList<String> p = new ArrayList<String>();
+		HashMap<String, ArrayList<String>> user = new HashMap<String, ArrayList<String>>();
+		while (rs.next()) {
+
+			System.out.println("email:" + rs.getString("email"));
+			// email.add(rs.getString("email"));
+			em.add(rs.getString("email"));
+			un.add(rs.getString("username"));
+			n.add(rs.getString("name"));
+			p.add(rs.getString("password"));
+
+		}
+
+		user.put("emails", em);
+		user.put("uname", un);
+		user.put("name", n);
+		user.put("pass", p);
+		// System.out.println(email.toString());
+		System.out.println(user.toString());
+		// return email;
+		return user;
 	}
 }

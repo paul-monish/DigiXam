@@ -107,23 +107,47 @@
 		                      <input type="text" class="form-control" id="email" name= "email" placeholder="Email Id">
 		                  </div>
 		                  </div>	
-		                  <%if(!role.equals(te)){%>
-		                  <div class="form-group row">
-		                  <label for="staticEmail" class="col-sm-2 col-form-label">Role</label>
+		                 <!-- department -->	
+		                 <%
+				
+							sql="SELECT * FROM department order by id desc";
+							
+							//out.println(sql);
+							try{
+							DbConnection dbcon = new DbConnection();
+							Connection con = dbcon.getConnection();
+							PreparedStatement st= con.prepareStatement(sql);
+							ResultSet rs= st.executeQuery();
+						  	int i=1;
+						  	if(rs.isBeforeFirst()){
+						  		out.println(" ");
+						  	}
+						  		
+						  %>
+		                      
+						  <div class="form-group row">
+		                  <label for="staticEmail" class="col-sm-2 col-form-label">Departments</label>
 		                  <div class="col-sm-10">
-		                      <select class="form-control" name="role">
-		                      	<%if(role.equals(sp)){%>
-		                          <option value="admin">Admin</option>
-		                          <option value="teacher">Teacher</option>
-		                          <option value="student">Student</option>
-		                        <%}else if(role.equals(ad)){%>
-		                          <option value="teacher">Teacher</option>
-		                          <option value="student">Student</option>
-		                        <%}%>
+		            		<select class="form-control" name="dept">
+		                      	<%while(rs.next())		
+								{	
+		                      	%>
+		                          <option value="<%=rs.getInt("id")%>"><%=rs.getString("name")%></option>
+		                          
+		                       <%} %>
 		                      </select>		
 		                  </div>
 		                  </div>
-		                  <%} %>				 
+		                  <%
+							  	rs.close();
+								st.close();
+								con.close();
+								}catch(Exception e){
+										e.printStackTrace();
+								}
+							%>
+							<!-- /.department -->	
+							 <input type="hidden" name="role" value="teacher"> 					 
 			          </div>
 			          <div class="modal-footer">
 			            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -150,16 +174,10 @@
               </thead>
               <tbody>
               <%
-				if(role.equals(sp)){
-					sql="SELECT * FROM users where role in ('admin', 'teacher', 'student') order by id desc";
-				}
-				else if(role.equals(ad)){
+			
 					sql="SELECT * FROM users where role in ('teacher') order by id desc";
-				}
-				else{
-					out.println("Wrong Entry");
-				}
-				//out.println(sql);
+				
+				
 				try{
 				DbConnection dbcon = new DbConnection();
 				Connection con = dbcon.getConnection();
@@ -219,7 +237,48 @@
 							      <div class="col-sm-10">
 							      	<input type="text" class="form-control" id="inputPassword" value='<%=rs1.getString("name")%>' name= "name" placeholder="Name">
 							      </div>
-								  </div>	  
+								  </div>	
+								  
+								  <!-- department -->	
+		                 <%
+				
+							sql="SELECT * FROM department order by id desc";
+							
+							//out.println(sql);
+							try{
+							DbConnection dbcon9 = new DbConnection();
+							Connection con9 = dbcon9.getConnection();
+							PreparedStatement st9= con9.prepareStatement(sql);
+							ResultSet rs9= st9.executeQuery();
+						  	int i9=1;
+						  	if(rs9.isBeforeFirst()){
+						  		out.println(" ");
+						  	}
+						  		
+						  %>
+		                      
+						  <div class="form-group row">
+		                  <label for="staticEmail" class="col-sm-2 col-form-label">Departments</label>
+		                  <div class="col-sm-10">
+		            		<select class="form-control" name="dept">
+		                      	<%while(rs9.next())		
+								{	
+		                      	%>
+		                          <option value="<%=rs9.getInt("id")%>"><%=rs9.getString("name")%></option>
+		                          
+		                       <%} %>
+		                      </select>		
+		                  </div>
+		                  </div>
+		                  <%
+							  	rs9.close();
+								st9.close();
+								con9.close();
+								}catch(Exception e){
+										e.printStackTrace();
+								}
+							%>
+							<!-- /.department -->	  
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

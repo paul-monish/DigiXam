@@ -27,34 +27,67 @@ public class ReadFileController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String id = request.getParameter("id");
-		System.out.println(id + "vi");
-		DatabaseDAO dao;
-		try {
-			dao = new DatabaseDAO();
-			if (dao.getFileName(Integer.parseInt(id))[0].equals("true")) {
-				String file[] = new Gson().fromJson(dao.getFileName(Integer.parseInt(id))[1], String[].class);
+		String qid = request.getParameter("qid");
+		String aid = request.getParameter("aid");
+		System.out.println(qid + "qid");
+		System.out.println(aid + "aid");
+		DatabaseDAO dao, dao1;
+		if (qid != null) {
+			try {
+				dao = new DatabaseDAO();
+				if (dao.getFileName(Integer.parseInt(qid))[0].equals("true")) {
+					String file[] = new Gson().fromJson(dao.getFileName(Integer.parseInt(qid))[1], String[].class);
 
-				System.out.println(file[0]);
+					System.out.println(file[0]);
 
-				String param = Arrays.toString(file);
-				param = param.substring(1, param.length() - 1); // removing enclosing []
-				String encArray = URLEncoder.encode(param, "utf-8");
+					String param = Arrays.toString(file);
+					param = param.substring(1, param.length() - 1); // removing enclosing []
+					String encArray = URLEncoder.encode(param, "utf-8");
 
-				// Send encArray as parameter.
-				HttpSession session = request.getSession();
-				session.setAttribute("username", session.getAttribute("username"));
-				session.setAttribute("email", session.getAttribute("email"));
+					// Send encArray as parameter.
+					HttpSession session = request.getSession();
+					session.setAttribute("username", session.getAttribute("username"));
+					session.setAttribute("email", session.getAttribute("email"));
 
-				session.setAttribute("id", id);
+					session.setAttribute("qid", qid);
 
-				response.sendRedirect("question?file=" + encArray);
-			} else {
-				request.getSession().setAttribute("msg", "Server Error!");
-				response.sendRedirect("error.jsp");
+					response.sendRedirect("question?file=" + encArray);
+				} else {
+					request.getSession().setAttribute("msg", "Server Error!");
+					response.sendRedirect("error.jsp");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}
+
+		if (aid != null) {
+			try {
+				dao1 = new DatabaseDAO();
+				if (dao1.getAnswer(Integer.parseInt(aid))[0].equals("true")) {
+					String file[] = new Gson().fromJson(dao1.getAnswer(Integer.parseInt(aid))[1], String[].class);
+
+					System.out.println(file[0]);
+
+					String param = Arrays.toString(file);
+					param = param.substring(1, param.length() - 1); // removing enclosing []
+					String encArray = URLEncoder.encode(param, "utf-8");
+
+					// Send encArray as parameter.
+					HttpSession session = request.getSession();
+					session.setAttribute("username", session.getAttribute("username"));
+					session.setAttribute("email", session.getAttribute("email"));
+
+					session.setAttribute("aid", aid);
+
+					response.sendRedirect("answer?file=" + encArray);
+				} else {
+					request.getSession().setAttribute("msg", "Server Error!");
+					response.sendRedirect("error.jsp");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

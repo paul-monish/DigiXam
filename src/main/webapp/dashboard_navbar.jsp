@@ -80,12 +80,16 @@ nav .profile-details li .admin_name{
           <h4 class="mt-1"><%=request.getRequestURI().split("/")[request.getRequestURI().split("/").length-1].substring(0, 1).toUpperCase()+request.getRequestURI().split("/")[request.getRequestURI().split("/").length-1].substring(1)%></h4>
         </li>
        
-      </ul>
-
+      </ul >
+		<ul class="navbar-nav ml-2">
+			<li id="timer1" class="nav-item">
+			00:00
+			</li>
+		</ul>
      <ul class="navbar-nav ml-auto profile-details ">
       <li class="nav-item dropdown mb-2">
       	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
-         <%if(profile_name.equals(null)){ %>
+         <%if(profile_name == null){ %>
          <img src="Assets/img/user.jpg" alt="user">
          <%}else{ %>
           <img src="files/<%=profile_name%>" alt="user">
@@ -105,7 +109,7 @@ nav .profile-details li .admin_name{
      
     </nav>
     <!-- /.navbar -->
-    
+   
  <%
 }
  %>

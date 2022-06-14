@@ -30,11 +30,15 @@ public class EditSubjectController extends HttpServlet {
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");
-
+		String year = request.getParameter("year");
+		String sem = request.getParameter("sem");
+		String dept = request.getParameter("dept");
 		Subject u = new Subject();
 		u.setId(Integer.parseInt(id));
 		u.setName(name);
-
+		u.setYear(year);
+		u.setName(name);
+		u.setDept(Integer.parseInt(dept));
 		DatabaseDAO dao;
 		try {
 			dao = new DatabaseDAO();

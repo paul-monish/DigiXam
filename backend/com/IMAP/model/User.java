@@ -19,6 +19,24 @@ public class User {
 	private String email;
 	private String password;
 	private Part profile;
+	private String year;
+	private int dept;
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public int getDept() {
+		return dept;
+	}
+
+	public void setDept(int dept) {
+		this.dept = dept;
+	}
 
 	public Part getProfile() {
 		return profile;

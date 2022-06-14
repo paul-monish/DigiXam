@@ -2,7 +2,9 @@ package com.IMAP.required;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -39,7 +41,10 @@ public class PDFtoJPEG {
 					BufferedImage image = page.convertToImage();
 					outputfile = new File(destinationDir + File.separatorChar + fileName + "_" + pageNumber + ".png");
 					System.out.println("Image Created -> " + outputfile.getName());
-					s[i] = outputfile.getName();
+
+					SimpleDateFormat sdf = new SimpleDateFormat("dd_MM_yyyyy");
+
+					s[i] = sdf.format(new Date()) + "_" + outputfile.getName();
 					ImageIO.write(image, "png", outputfile);
 					i++;
 					pageNumber++;

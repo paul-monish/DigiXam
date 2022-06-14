@@ -32,12 +32,13 @@ public class EditAUSDCSubjectController extends HttpServlet {
 		String sub_id = request.getParameter("sub");
 		String dept_id = request.getParameter("dept");
 		String id = request.getParameter("id");
+		String year = request.getParameter("year");
 		AssignedUserDepartmentSubject u = new AssignedUserDepartmentSubject();
 		u.setId(Integer.parseInt(id));
 		u.setDept_id(Integer.parseInt(dept_id));
 		u.setSub_id(Integer.parseInt(sub_id));
 		u.setUser_id(Integer.parseInt(user_id));
-
+		u.setYear(year);
 		DatabaseDAO dao;
 		try {
 			dao = new DatabaseDAO();

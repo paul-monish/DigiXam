@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +19,7 @@ import javax.servlet.http.Part;
 import com.IMAP.DAO.DatabaseDAO;
 import com.IMAP.model.Examination;
 import com.IMAP.required.PDFtoJPEG;
+import com.IMAP.required.SendMail;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10MB
 		maxFileSize = 1024 * 1024 * 50, // 50MB
@@ -35,14 +38,15 @@ public class ExaminationController extends HttpServlet {
 		String user_id = request.getParameter("user");
 		String sub_id = request.getParameter("sub");
 		String dept_id = request.getParameter("dept");
-
+		String year = request.getParameter("year");
+		String due = request.getParameter("due");
 		Part qsn = request.getPart("qsn");
-
 		InputStream inputStream = null;
 		if (qsn != null) {
 			System.out.println(qsn.getSubmittedFileName());
 			System.out.println(qsn.getSize());
 			System.out.println(qsn.getContentType());
+
 			String fileName = qsn.getSubmittedFileName();
 			String path = request.getServletContext().getRealPath("/" + "files" + File.separator + fileName);
 			String path2 = request.getServletContext().getRealPath("/" + "doc");
@@ -53,22 +57,32 @@ public class ExaminationController extends HttpServlet {
 				System.out.println("success");
 				String[] new_name = new PDFtoJPEG().pdfToImg(path, path2);
 				System.out.println(path2);
+				System.out.println("ss: " + new_name.toString());
 				Examination u = new Examination();
 
 				u.setDept_id(Integer.parseInt(dept_id));
 				u.setSub_id(Integer.parseInt(sub_id));
 				u.setUser_id(Integer.parseInt(user_id));
+				u.setYear(year);
 				u.setQsn_name(new_name);
 				u.setQsn(qsn);
+				u.setDuration(Integer.parseInt(due));
 				DatabaseDAO dao;
 				try {
 					dao = new DatabaseDAO();
 					dao.insertExam(u, inputStream);
+					String p = request.getServerName() + ":" + request.getLocalPort() + request.getContextPath();
+					new SendMail().examinationMail(u, p);
 					HttpSession session = request.getSession();
 					session.setAttribute("username", session.getAttribute("username"));
 					session.setAttribute("email", session.getAttribute("email"));
 					response.sendRedirect("examination");
 				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+				} catch (AddressException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (MessagingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

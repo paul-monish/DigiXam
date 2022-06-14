@@ -29,9 +29,14 @@ public class AddSubjectController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String name = request.getParameter("name");
+		String year = request.getParameter("year");
+		String sem = request.getParameter("sem");
+		String dept = request.getParameter("dept");
 		Subject d = new Subject();
-
+		d.setSem(sem);
+		d.setYear(year);
 		d.setName(name);
+		d.setDept(Integer.parseInt(dept));
 		DatabaseDAO dao;
 		try {
 			dao = new DatabaseDAO();

@@ -26,3 +26,38 @@
 <script src="Assets/dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script src="https://use.fontawesome.com/8587060daf.js"></script>
+<!-- JavaScript Files -->
+<script type="text/javascript" >
+$(function () {
+	
+
+
+	$( "#timer" ).click(function() {
+		
+	 	
+		  var path=document.getElementById("path").value;
+		  var id=document.getElementById("jid").value;
+			 //alert(id);
+			
+			 location.replace(path+"/StudentReadViewController?id="+id);
+		});
+		
+		 
+	$("#timer").click(function(){
+	    var $this = $(this);
+	    if($this.data('clicked')) {
+	    	var timer;
+		 	var ele=document.getElementById("timer1");
+		 	var sec=0;
+		 	timer=setInterval(()=>{
+		 		ele.innerHTML='00:'+sec;
+		 		sec++;
+		 	},1000);
+	    }
+	   
+	});
+
+});
+
+</script>
+
