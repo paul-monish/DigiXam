@@ -30,6 +30,14 @@
 <script type="text/javascript" >
 $(function () {
 	
+	$("#bars").click(function(){
+		if($('body').hasClass('sidebar-collapse')){
+			$("#datetime").show();
+		}
+		else {
+			$("#datetime").hide();
+		} 
+		});
 
 
 	$( "#timer" ).click(function() {

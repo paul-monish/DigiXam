@@ -48,17 +48,18 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
-            
+           <%if(role.equals("student")) {%>
+ 
             <li class="nav-item ">
               <a href="<%=request.getContextPath()%>/home" class="nav-link text-light">
-                <i class="nav-icon  fas fa-th "></i>
+                <i class="nav-icon  fa-solid fa-person-chalkboard "></i>
+                
                 <p>
                   Dashboard
                 </p>
               </a>
             </li>
-            <%if(role.equals("student")) {%>
-             <div class="datetime">
+             <div class="datetime" id="datetime">
 		      <div class="date">
 		        <span id="dayname">Day</span>,
 		        <span id="month">Month</span>

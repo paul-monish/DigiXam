@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="Assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 <link rel="stylesheet" href="Assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="Assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<script src="https://kit.fontawesome.com/f8f1e09255.js" crossorigin="anonymous"></script>
 <!-- Theme style -->
 <link rel="stylesheet" href="Assets/dist/css/adminlte.min.css">
 <title>DigiXam</title>

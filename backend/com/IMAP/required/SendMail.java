@@ -120,6 +120,7 @@ public class SendMail {
 			address[i] = new InternetAddress(email);
 			i++;
 		}
+		// BodyPart messageBodyPart = new MimeBodyPart();
 		Message message = new MimeMessage(session);
 		message.setFrom(new InternetAddress(fromEmail, "DigiXam"));
 		message.addRecipients(Message.RecipientType.TO, address);
@@ -131,7 +132,13 @@ public class SendMail {
 		// message.setText("Hello, " + n + "\nYour DigiXam's login credentials are:\r\n"
 		// + "Your User Name is: " + un
 		// + "\nYour Password is: " + p);
-		message.setText("Hello, Yours Examination Login Link is:" + path + "/student-examination");
+		String html = "Hello, Yours Examination Login Link is: <a href=" + path + "'student-examination'>" + path
+				+ "/student-examination" + "</a>";
+		// message.setText(html);
+		// message.setText("Hello, Yours Examination Login Link is:" + path +
+		// "/student-examination");
+		message.setContent(html, "text/html");
+
 		Transport.send(message);
 		test = true;
 		return test;
